@@ -1,0 +1,14 @@
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\bin\Debug\net10.0\BookingProject.exe
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\bin\Debug\net10.0\BookingProject.deps.json
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\bin\Debug\net10.0\BookingProject.runtimeconfig.json
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\bin\Debug\net10.0\BookingProject.dll
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\bin\Debug\net10.0\BookingProject.pdb
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\BookingProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\BookingProject.AssemblyInfoInputs.cache
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\BookingProject.AssemblyInfo.cs
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\BookingProject.csproj.CoreCompileInputs.cache
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\BookingProject.dll
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\refint\BookingProject.dll
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\BookingProject.pdb
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\BookingProject.genruntimeconfig.cache
+C:\Users\tony_\OneDrive - BTH Student\lexicon .NET\project\code\BookingSystem\BookingProject\obj\Debug\net10.0\ref\BookingProject.dll
