@@ -1,4 +1,6 @@
-﻿namespace BookingTestProject;
+﻿using BookingProject;
+
+namespace BookingTestProject;
 
 
 // Test driven development:
@@ -15,7 +17,7 @@ public class UnitTest1
         //arrange
         var result = false;
         //act
-        result=User.Login(userEmail,userPassword);
+       // result=User.Login(userEmail,userPassword);
         //assert
         Assert.True(result);
     }

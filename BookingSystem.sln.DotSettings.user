@@ -1,0 +1,14 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2a424877_002D2d17_002D409b_002D9b23_002D4bfbd8393ffa/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DeleteAPropertyOnSuccessReturnTrue(propertyId: 6)" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::4432AB87-B3CA-471C-9724-7173D739E359::net10.0::BookingTestProject.AdminFeatures.DeleteAPropertyOnSuccessReturnTrue&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::4432AB87-B3CA-471C-9724-7173D739E359::net10.0::BookingTestProject.AdminFeatures.DeleteAPropertyOnFailureReturnException&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8bb6332c_002D4c0b_002D4b00_002D88e4_002D21afc10d6ad4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="DeleteAPropertyOnFailureReturnException" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::4432AB87-B3CA-471C-9724-7173D739E359::net10.0::BookingTestProject.PropertyServiceTests.AddAPropertyWithRooms&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::4432AB87-B3CA-471C-9724-7173D739E359::net10.0::BookingTestProject.PropertyServiceTests.DeleteAProperty_OnSuccess_ReturnTrue&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::4432AB87-B3CA-471C-9724-7173D739E359::net10.0::BookingTestProject.PropertyServiceTests.DeleteAProperty_OnFailure_ReturnException&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

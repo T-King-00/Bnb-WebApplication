@@ -1,6 +1,6 @@
 ﻿namespace BookingProject;
 
-public class Apartment : Property
+public class Apartment 
 {
     
 }

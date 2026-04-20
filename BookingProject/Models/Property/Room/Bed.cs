@@ -2,6 +2,7 @@
 
 public class Bed
 {
+    public int Id{get;set;}
     public BedType Type{get;set;}
     public bool Available{get;set;}
     public int Quantity{get;set;}
