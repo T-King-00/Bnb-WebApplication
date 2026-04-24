@@ -7,19 +7,22 @@ public class PropertyService
     {
         _propertyRepo = propertyRepo;
     }
-    public List<Property> GetAllProperties()
+    public List<BaseProperty> GetAllProperties()
     {
         return _propertyRepo.GetAllProperties();
     }
-    public Property GetPropertyById(int id)
+    public BaseProperty GetPropertyById(int id)
     {
         return _propertyRepo.GetPropertyById(id);
     }
-    public void AddProperty(Property property)
+    public void AddProperty(BaseProperty property)
     {
         _propertyRepo.AddProperty(property);
     }
-    public void UpdateProperty(Property property)
+    public void AddHotel(Hotel property)
+    {
+        _propertyRepo.AddProperty(property);    }
+    public void UpdateProperty(BaseProperty property)
     {
         _propertyRepo.UpdateProperty(property);
     }
@@ -27,4 +30,6 @@ public class PropertyService
     {
         _propertyRepo.DeleteProperty(id);
     }
+
+  
 }

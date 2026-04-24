@@ -1,6 +1,11 @@
-﻿namespace BookingProject;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Villa 
+namespace BookingProject;
+
+public class Villa : BaseProperty
 {
-  
+ 
+    public Villa(string name,DateTime creationDate) : base(name,creationDate)
+    {
+    }
 }

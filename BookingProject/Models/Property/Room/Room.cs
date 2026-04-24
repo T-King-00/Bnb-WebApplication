@@ -12,11 +12,11 @@ public  class Room
     public RoomType RoomType{get;set;}
     public List<Bed> Beds { get; set; } = new ();
     
-    [ForeignKey("PropertyId")]
-    public int PropertyId{get;set;}
-    public Property Property{get;set;}
+    
     
     //Navigation property
+    public Hotel Hotel{get;set;}
+    
     public Price Price{get;set;}
     
     
@@ -35,19 +35,7 @@ public  class Room
     
 }
 
-public class Price
-{
-    public int id { get; set; }
-    public double BasePrice { get; set; }
 
-
-    public Price(double basePrice)
-    {
-        BasePrice = basePrice;
-    }
-
-
-}
 
 public enum  RoomType
 {

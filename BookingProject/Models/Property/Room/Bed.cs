@@ -1,4 +1,6 @@
-﻿namespace BookingProject;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookingProject;
 
 public class Bed
 {
@@ -6,6 +8,12 @@ public class Bed
     public BedType Type{get;set;}
     public bool Available{get;set;}
     public int Quantity{get;set;}
+    
+    //nav and reference
+    [ForeignKey("RoomId")]
+
+    public Room Room { get; set; } = null!;
+    
 
     public Bed(BedType type, bool available, int quantity)
     {

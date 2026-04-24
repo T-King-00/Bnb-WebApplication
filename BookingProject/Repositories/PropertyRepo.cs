@@ -12,23 +12,27 @@ public class PropertyRepo : IPropertyRepo
         _context = context;
     }
     
-    public List<Property> GetAllProperties()
+    public List<BaseProperty> GetAllProperties()
     {
-        return _context.Property
-            .Include(p => p.Rooms)
-            .ThenInclude(r => r.Beds)
+        return _context.BaseProperties
+            .ToList();
+    }
+    
+    public List<Hotel> GetAllHotels()
+    {
+        return _context.BaseProperties
+            .OfType<Hotel>().Include(h=>h.Rooms)
+            .ThenInclude(h=>h.Beds)
             .ToList();
     }
 
-    public Property GetPropertyById(int id)
+    public BaseProperty GetPropertyById(int id)
     {
-        return _context.Property
-            .Include(p => p.Rooms)
-            .ThenInclude(r => r.Beds)
+        return _context.BaseProperties
             .FirstOrDefault(x => x.Id == id);
     }
 
-    public void AddProperty(Property property)
+    public void AddProperty(BaseProperty property)
     {
         try
         {
@@ -38,20 +42,19 @@ public class PropertyRepo : IPropertyRepo
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
         }
        
     }
 
-    public void UpdateProperty(Property property)
+    public void UpdateProperty(BaseProperty property)
     {
         throw new NotImplementedException();
     }
 
-    public Property FetchPropertyByIdToRemove(int id)
+    public BaseProperty FetchPropertyByIdToRemove(int id)
     {
-        List<Property> properties = GetAllProperties();
-        Property propertytoRemove =properties.Where(x=>x.Id==id)
+        List<BaseProperty> properties = GetAllProperties();
+        BaseProperty propertytoRemove =properties.Where(x=>x.Id==id)
             .FirstOrDefault();
         try
         {
@@ -72,7 +75,7 @@ public class PropertyRepo : IPropertyRepo
     {
         try
         {
-            Property propertytoRemove = FetchPropertyByIdToRemove(id);
+            BaseProperty propertytoRemove = FetchPropertyByIdToRemove(id);
            
             _context.Remove(propertytoRemove);
             _context.SaveChanges();

@@ -9,7 +9,7 @@ public class Program
 
     public static void Main(string[] args)
     {
-        AppDbContext db = new AppDbContext();
+        /*AppDbContext db = new AppDbContext();
         _propertyService = new PropertyService(new PropertyRepo(db));
 
         bool exit = false;
@@ -36,7 +36,7 @@ public class Program
                      Thread.Sleep(1000);
                      break;
              }
-         }
+         }*/
     }
 
     public static void PrintWelcomeMessages()
@@ -147,12 +147,17 @@ public class Program
         Console.ReadKey();
     }
 
-    private static void PrintPropertyBrief(Property prop)
+    private static void PrintPropertyBrief(BaseProperty prop)
     {
-        Console.WriteLine($"ID: {prop.Id} | Name: {prop.Name} | Location: {prop.Address} | Rooms: {prop.Rooms?.Count ?? 0}");
+        int roomsCount = 0;
+        if (prop is Hotel hotel)
+        {
+            roomsCount = hotel.Rooms?.Count ?? 0;
+        }
+        Console.WriteLine($"ID: {prop.Id} | Name: {prop.Name} | Location: {prop.Address} | Type: {prop.GetType().Name} | Rooms: {roomsCount}");
     }
 
-    private static void PrintPropertyFullDetails(Property prop)
+    private static void PrintPropertyFullDetails(BaseProperty prop)
     {
         Console.Clear();
         Console.WriteLine("========================================");
@@ -160,32 +165,39 @@ public class Program
         Console.WriteLine("========================================");
         Console.WriteLine($"ID:       {prop.Id}");
         Console.WriteLine($"Address:  {prop.Address}");
-        Console.WriteLine($"Type:     {prop.Type}");
+        Console.WriteLine($"Type:     {prop.GetType().Name}");
         Console.WriteLine("----------------------------------------");
-        Console.WriteLine("ROOMS:");
 
-        if (prop.Rooms == null || prop.Rooms.Count == 0)
+        if (prop is Hotel hotel)
         {
-            Console.WriteLine("  No rooms found.");
-        }
-        else
-        {
-            foreach (var room in prop.Rooms)
+            Console.WriteLine("ROOMS:");
+            if (hotel.Rooms == null || hotel.Rooms.Count == 0)
             {
-                Console.WriteLine($"  - Room ID: {room.Id} | Type: {room.RoomType} | Size: {room.size} sqm | Price: {room.Price:C}/day");
-                if (room.Beds == null || room.Beds.Count == 0)
+                Console.WriteLine("  No rooms found.");
+            }
+            else
+            {
+                foreach (var room in hotel.Rooms)
                 {
-                    Console.WriteLine("    No beds found.");
-                }
-                else
-                {
-                    Console.WriteLine("     Beds:");
-                    foreach (var bed in room.Beds)
+                    Console.WriteLine($"  - Room ID: {room.Id} | Type: {room.RoomType} | Size: {room.size} sqm | Price: {room.Price?.BasePrice:C}/day");
+                    if (room.Beds == null || room.Beds.Count == 0)
                     {
-                        Console.WriteLine($"        * {bed.Quantity}x {bed.Type} Bed (Available: {(bed.Available ? "Yes" : "No")})");
+                        Console.WriteLine("    No beds found.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("     Beds:");
+                        foreach (var bed in room.Beds)
+                        {
+                            Console.WriteLine($"        * {bed.Quantity}x {bed.Type} Bed (Available: {(bed.Available ? "Yes" : "No")})");
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            Console.WriteLine("Details for this property type are limited.");
         }
         Console.WriteLine("========================================");
     }
@@ -194,102 +206,126 @@ public class Program
     {
         Console.Clear();
         Console.WriteLine("--- Add New Property ---");
-        
+
+        Console.WriteLine("Select Property Type:");
+        Console.WriteLine("1. Hotel");
+        Console.WriteLine("2. Villa");
+        Console.WriteLine("3. Apartment");
+        Console.Write("Choice: ");
+        string typeChoice = Console.ReadLine();
+
+        BaseProperty newProperty;
+        DateTime creationDate = DateTime.Now;
+
         Console.Write("Enter Name: ");
         string name = Console.ReadLine();
-        
-        Console.Write("Enter Description (Optional): ");
-        string description = Console.ReadLine();
-        
-        Console.Write("Enter Country (Optional): ");
-        string country = Console.ReadLine();
-        
-        Console.Write("Enter City (Optional): ");
-        string city = Console.ReadLine();
-        
-        Console.Write("Enter Address: ");
-        string address = Console.ReadLine();
 
-        if (string.IsNullOrWhiteSpace(name) ||
-            string.IsNullOrWhiteSpace(address) )
-
+        if (string.IsNullOrWhiteSpace(name))
         {
-            Console.WriteLine("Error: Name and Address are required.");
+            Console.WriteLine("Error: Name is required.");
             Thread.Sleep(2000);
             return;
         }
-    
-        Property newProperty = new Property(name, address);
-        newProperty.Rooms = new List<Room>();
 
-        bool addMoreRooms = true;
-        while (addMoreRooms)
+        switch (typeChoice)
         {
-            Console.Write("\nDo you want to add a room to this property? (y/n): ");
-            if (Console.ReadLine()?.ToLower() != "y")
-            {
-                addMoreRooms = false;
-                continue;
-            }
+            case "1":
+                newProperty = new Hotel(name, creationDate);
+                break;
+            case "2":
+                newProperty = new Villa(name, creationDate);
+                break;
+            case "3":
+                newProperty = new Apartment(name, creationDate);
+                break;
+            default:
+                Console.WriteLine("Invalid property type.");
+                Thread.Sleep(1500);
+                return;
+        }
 
-            Room room = new Room();
-            Console.Write("Enter Room Size (sqm): ");
-            if (int.TryParse(Console.ReadLine(), out int size)) room.size = size;
+        Console.Write("Enter Address: ");
+        newProperty.Address = Console.ReadLine();
 
-            Console.Write("Enter Base Price Per Day: ");
-            if (double.TryParse(Console.ReadLine(), out double price))
-            {
-                Price p = new Price(price);
-                room.Price= p;
-            }
-           
+        if (string.IsNullOrWhiteSpace(newProperty.Address))
+        {
+            Console.WriteLine("Error: Address is required.");
+            Thread.Sleep(2000);
+            return;
+        }
 
-            Console.WriteLine("Select Room Type:");
-            foreach (var type in Enum.GetValues<RoomType>())
-            {
-                Console.WriteLine($"{(int)type}. {type}");
-            }
-            Console.Write("Choice: ");
-            if (int.TryParse(Console.ReadLine(), out int rtIndex) && Enum.IsDefined(typeof(RoomType), rtIndex))
-            {
-                room.RoomType = (RoomType)rtIndex;
-            }
+        if (newProperty is Hotel hotel)
+        {
+            hotel.Rooms = new List<Room>();
 
-            room.Beds = new List<Bed>();
-            bool addMoreBeds = true;
-            while (addMoreBeds)
+            bool addMoreRooms = true;
+            while (addMoreRooms)
             {
-                Console.Write("Do you want to add a bed to this room? (y/n): ");
+                Console.Write("\nDo you want to add a room to this hotel? (y/n): ");
                 if (Console.ReadLine()?.ToLower() != "y")
                 {
-                    addMoreBeds = false;
+                    addMoreRooms = false;
                     continue;
                 }
 
-                Console.WriteLine("Select Bed Type:");
-                foreach (var bType in Enum.GetValues<BedType>())
+                Room room = new Room();
+                Console.Write("Enter Room Size (sqm): ");
+                if (int.TryParse(Console.ReadLine(), out int size)) room.size = size;
+
+                Console.Write("Enter Base Price Per Day: ");
+                if (double.TryParse(Console.ReadLine(), out double price))
                 {
-                    Console.WriteLine($"{(int)bType}. {bType}");
+                    Price p = new Price(price);
+                    room.Price = p;
+                }
+
+                Console.WriteLine("Select Room Type:");
+                foreach (var type in Enum.GetValues<RoomType>())
+                {
+                    Console.WriteLine($"{(int)type}. {type}");
                 }
                 Console.Write("Choice: ");
-                BedType selectedBedType = BedType.Single;
-                if (int.TryParse(Console.ReadLine(), out int btIndex) && Enum.IsDefined(typeof(BedType), btIndex))
+                if (int.TryParse(Console.ReadLine(), out int rtIndex) && Enum.IsDefined(typeof(RoomType), rtIndex))
                 {
-                    selectedBedType = (BedType)btIndex;
+                    room.RoomType = (RoomType)rtIndex;
                 }
 
-                Console.Write("Enter Quantity: ");
-                int.TryParse(Console.ReadLine(), out int qty);
+                room.Beds = new List<Bed>();
+                bool addMoreBeds = true;
+                while (addMoreBeds)
+                {
+                    Console.Write("Do you want to add a bed to this room? (y/n): ");
+                    if (Console.ReadLine()?.ToLower() != "y")
+                    {
+                        addMoreBeds = false;
+                        continue;
+                    }
 
-                room.Beds.Add(new Bed(selectedBedType, true, qty));
+                    Console.WriteLine("Select Bed Type:");
+                    foreach (var bType in Enum.GetValues<BedType>())
+                    {
+                        Console.WriteLine($"{(int)bType}. {bType}");
+                    }
+                    Console.Write("Choice: ");
+                    BedType selectedBedType = BedType.Single;
+                    if (int.TryParse(Console.ReadLine(), out int btIndex) && Enum.IsDefined(typeof(BedType), btIndex))
+                    {
+                        selectedBedType = (BedType)btIndex;
+                    }
+
+                    Console.Write("Enter Quantity: ");
+                    int.TryParse(Console.ReadLine(), out int qty);
+
+                    room.Beds.Add(new Bed(selectedBedType, true, qty));
+                }
+
+                hotel.Rooms.Add(room);
             }
-
-            newProperty.Rooms.Add(room);
         }
 
         _propertyService.AddProperty(newProperty);
-        
-        Console.WriteLine("\nProperty with rooms and beds added successfully!");
+
+        Console.WriteLine("\nProperty added successfully!");
         Thread.Sleep(1500);
     }
 

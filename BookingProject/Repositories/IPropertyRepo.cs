@@ -2,10 +2,11 @@
 
 public interface IPropertyRepo
 {
-    public List<Property> GetAllProperties();
-    public Property GetPropertyById(int id);
-    public void AddProperty(Property property);
-    public void UpdateProperty(Property property);
+    public List<BaseProperty> GetAllProperties();
+    public BaseProperty GetPropertyById(int id);
+    public void AddProperty(BaseProperty property);
+    public void UpdateProperty(BaseProperty property);
     public void DeleteProperty(int id);
-    
 }
+
+

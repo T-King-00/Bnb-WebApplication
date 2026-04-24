@@ -1,28 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace BookingProject.Migrations
 {
     /// <inheritdoc />
-    public partial class v1_inital : Migration
+    public partial class v3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Property",
+                name: "BaseProperties",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Address = table.Column<string>(type: "TEXT", nullable: false),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false)
+                    Address = table.Column<string>(type: "TEXT", nullable: true),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
+                    BedroomsCount = table.Column<int>(type: "INTEGER", nullable: true),
+                    size = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Property", x => x.Id);
+                    table.PrimaryKey("PK_BaseProperties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,19 +48,19 @@ namespace BookingProject.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BasePricePerDay = table.Column<double>(type: "REAL", nullable: false),
                     size = table.Column<int>(type: "INTEGER", nullable: false),
                     RoomType = table.Column<int>(type: "INTEGER", nullable: false),
-                    PropertyId = table.Column<int>(type: "INTEGER", nullable: true)
+                    HotelId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Room", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Room_Property_PropertyId",
-                        column: x => x.PropertyId,
-                        principalTable: "Property",
-                        principalColumn: "Id");
+                        name: "FK_Room_BaseProperties_HotelId",
+                        column: x => x.HotelId,
+                        principalTable: "BaseProperties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,7 +72,7 @@ namespace BookingProject.Migrations
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Available = table.Column<bool>(type: "INTEGER", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    RoomId = table.Column<int>(type: "INTEGER", nullable: true)
+                    RoomId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,7 +81,28 @@ namespace BookingProject.Migrations
                         name: "FK_Bed_Room_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Room",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Price",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BasePrice = table.Column<double>(type: "REAL", nullable: false),
+                    RoomId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Price", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Price_Room_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Room",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -85,9 +111,15 @@ namespace BookingProject.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Room_PropertyId",
+                name: "IX_Price_RoomId",
+                table: "Price",
+                column: "RoomId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Room_HotelId",
                 table: "Room",
-                column: "PropertyId");
+                column: "HotelId");
         }
 
         /// <inheritdoc />
@@ -97,13 +129,16 @@ namespace BookingProject.Migrations
                 name: "Bed");
 
             migrationBuilder.DropTable(
+                name: "Price");
+
+            migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
                 name: "Room");
 
             migrationBuilder.DropTable(
-                name: "Property");
+                name: "BaseProperties");
         }
     }
 }
