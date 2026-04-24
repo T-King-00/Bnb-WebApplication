@@ -25,9 +25,6 @@ public  class Property
     {
         this.Rooms = rooms;
     }
-    
-
-    
 }
 public enum PropertyType
 {

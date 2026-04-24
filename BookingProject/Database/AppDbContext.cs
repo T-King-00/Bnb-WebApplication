@@ -6,10 +6,9 @@ namespace BookingProject.Database;
 public class AppDbContext:DbContext
 {
     public DbSet<Property> Property { get; set; }
-    public DbSet<Room> Room { get; set; }
     public DbSet<User> User { get; set; }
-    
-    public string DbPath { get; }
+
+    public string DbPath = "C:\\Users\\tony_\\OneDrive - BTH Student\\lexicon .NET\\project\\code\\BookingSystem\\BookingProject";
     
     public AppDbContext()
     {
@@ -18,8 +17,8 @@ public class AppDbContext:DbContext
         DbPath=Path.Combine(path,"BookingAppDbContext.db");
         Database.EnsureCreated();*/
 
-        DbPath = Path.Combine("C:\\Users\\tony_\\OneDrive - BTH Student\\lexicon .NET\\project\\code\\BookingSystem", "BookingAppDbContext.db");
-        Database.EnsureCreated();
+        DbPath = Path.Combine(DbPath, "BookingAppDbContext.db");
+        // Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

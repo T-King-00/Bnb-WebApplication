@@ -172,7 +172,7 @@ public class Program
         {
             foreach (var room in prop.Rooms)
             {
-                Console.WriteLine($"  - Room ID: {room.Id} | Type: {room.RoomType} | Size: {room.size} sqm | Price: {room.BasePricePerDay:C}/day");
+                Console.WriteLine($"  - Room ID: {room.Id} | Type: {room.RoomType} | Size: {room.size} sqm | Price: {room.Price:C}/day");
                 if (room.Beds == null || room.Beds.Count == 0)
                 {
                     Console.WriteLine("    No beds found.");
@@ -237,7 +237,12 @@ public class Program
             if (int.TryParse(Console.ReadLine(), out int size)) room.size = size;
 
             Console.Write("Enter Base Price Per Day: ");
-            if (double.TryParse(Console.ReadLine(), out double price)) room.BasePricePerDay = price;
+            if (double.TryParse(Console.ReadLine(), out double price))
+            {
+                Price p = new Price(price);
+                room.Price= p;
+            }
+           
 
             Console.WriteLine("Select Room Type:");
             foreach (var type in Enum.GetValues<RoomType>())
