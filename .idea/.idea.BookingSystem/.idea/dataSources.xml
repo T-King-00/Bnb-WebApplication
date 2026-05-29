@@ -8,11 +8,11 @@
       <jdbc-url>jdbc:sqlite:identifier.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="BookingAppDbContext" uuid="a69d0bc3-f595-4a8a-8ad6-6b5667fe67f1">
+    <data-source source="LOCAL" name="BookingAppDbContext" uuid="e7386ef7-f0e2-4375-aea9-bc58dd0d9b92">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/BookingAppDbContext.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/BookingProject/BookingAppDbContext.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
