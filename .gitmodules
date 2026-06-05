@@ -1,6 +1,6 @@
 [submodule "backend"]
 	path = backend
-	url = ./backend
+	url = https://github.com/T-King-00/b-bWebApp_backend_repo.git	
 [submodule "frontend"]
 	path = frontend
-	url = ./frontend
+	url = https://github.com/T-King-00/bnbWebApp_frontend_repo.git
