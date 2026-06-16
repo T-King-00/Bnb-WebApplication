@@ -295,7 +295,7 @@ If `.NET` build fails because `BookingProject.exe` is used by another process, s
 4. Replace hard-coded booking and room summary values with real route/API data.
 5. Add backend validation responses for invalid booking requests.
 6. Clean up current frontend lint errors.
-7. Add tests for room availability and booking creation.
+7. Add tests for room availability .
 
 ## Learning Focus
 
